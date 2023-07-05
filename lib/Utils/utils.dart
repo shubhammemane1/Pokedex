@@ -2,3 +2,8 @@ export './util.dart';
 export './appColors.dart';
 export './appConstants.dart';
 export './logs.dart';
+export './spaces.dart';
+export './sizes.dart';
+export './screenProps.dart';    
+export './assetsPath.dart';    
+export './textStyles.dart';    
