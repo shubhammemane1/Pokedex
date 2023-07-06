@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:pokedex/Model/category.dart';
 import 'package:pokedex/Model/models.dart';
@@ -33,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 AssetsPath.pokeball,
                 scale: 15,
               ),
-              SpaceW12(),
+              const SpaceW12(),
               Text(
                 AppConstants.APP_NAME,
                 style: TextStyle(
@@ -59,14 +61,14 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SpaceH40(),
-              SpaceH40(),
-              SpaceH40(),
+              const SpaceH40(),
+              const SpaceH40(),
+              const SpaceH40(),
               const Text(
                 AppConstants.What_Pokemon_Your_Looking_For,
                 style: TextStyle(fontSize: Sizes.TEXT_SIZE_32),
               ),
-              SpaceH20(),
+              const SpaceH20(),
               const TextField(
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -74,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     prefixIcon: Icon(Icons.search),
                     hintText: "Search Pokemon"),
               ),
-              SpaceH30(),
+              const SpaceH30(),
               SizedBox(
                 width: ScreenSize.screenWidth(context) * 0.9,
                 child: GridView.builder(

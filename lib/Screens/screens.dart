@@ -1,2 +1,3 @@
 export './homeScreen.dart';
-export './pokemonDetails.dart';
+export './pokemonDetailsScreen.dart';
+export './pokemonListingScreen.dart';

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:pokedex/Model/models.dart';
 import 'package:pokedex/Utils/utils.dart';
@@ -12,7 +14,7 @@ class CategoryCard extends StatelessWidget {
       children: [
         Column(
           children: [
-            SpaceH30(),
+            const SpaceH30(),
             SizedBox(
               width: ScreenSize.screenWidth(context),
               height: ScreenSize.screenWidth(context) * 0.2,

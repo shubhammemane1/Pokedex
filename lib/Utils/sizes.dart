@@ -1,4 +1,6 @@
 
+// ignore_for_file: constant_identifier_names
+
 class Sizes {
   static const double SIZE_120 = 120.0;
   static const double SIZE_60 = 60.0;

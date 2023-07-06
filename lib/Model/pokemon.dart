@@ -169,33 +169,33 @@ class Pokemon {
     if (typeofpokemon != null) {
       final v = typeofpokemon;
       final arr0 = [];
-      v!.forEach((v) {
+      for (var v in v!) {
         arr0.add(v);
-      });
+      }
       data['typeofpokemon'] = arr0;
     }
     if (weaknesses != null) {
       final v = weaknesses;
       final arr0 = [];
-      v!.forEach((v) {
+      for (var v in v!) {
         arr0.add(v);
-      });
+      }
       data['weaknesses'] = arr0;
     }
     if (evolutions != null) {
       final v = evolutions;
       final arr0 = [];
-      v!.forEach((v) {
+      for (var v in v!) {
         arr0.add(v);
-      });
+      }
       data['evolutions'] = arr0;
     }
     if (abilities != null) {
       final v = abilities;
       final arr0 = [];
-      v!.forEach((v) {
+      for (var v in v!) {
         arr0.add(v);
-      });
+      }
       data['abilities'] = arr0;
     }
     data['hp'] = hp;
