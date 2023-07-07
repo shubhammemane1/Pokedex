@@ -7,7 +7,7 @@ import 'utils.dart';
 
 String getEnumValue(e) => e.toString().split('.').last;
 
-Future<List<Pokemon>> loadJsonData() async {
+ loadJsonData() async {
   var jsonString = await rootBundle.loadString('assets/json/data.json');
 
   var data = jsonDecode(jsonString);
@@ -20,8 +20,8 @@ Future<List<Pokemon>> loadJsonData() async {
   return listOfPokemon;
 }
 
-Color getTypeColor(String Type) {
-  switch (Type.toLowerCase()) {
+Color getTypeColor(String? type) {
+  switch (type!.toLowerCase()) {
     case "grass":
       return AppColors.grass;
     case "fire":
@@ -58,5 +58,46 @@ Color getTypeColor(String Type) {
       return AppColors.normal;
     default:
       return AppColors.normal;
+  }
+}
+
+String getTypeIcon(String type) {
+  switch (type.toLowerCase()) {
+    case "grass":
+      return AssetsPath.grass;
+    case "fire":
+      return AssetsPath.fire;
+    case "water":
+      return AssetsPath.water;
+    case "electric":
+      return AssetsPath.electric;
+    case "psychic":
+      return AssetsPath.psychic;
+    case "fighting":
+      return AssetsPath.fighting;
+    case "flying":
+      return AssetsPath.flying;
+    case "poison":
+      return AssetsPath.poison;
+    case "ground":
+      return AssetsPath.ground;
+    case "rock":
+      return AssetsPath.rock;
+    case "bug":
+      return AssetsPath.bug;
+    case "ice":
+      return AssetsPath.ice;
+    case "ghost":
+      return AssetsPath.ghost;
+    case "dark":
+      return AssetsPath.dark;
+    case "steel":
+      return AssetsPath.steel;
+    case "dragon":
+      return AssetsPath.dragon;
+    case "normal":
+      return AssetsPath.normal;
+    default:
+      return AssetsPath.normal;
   }
 }

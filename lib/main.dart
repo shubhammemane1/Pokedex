@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pokedex/Screens/screens.dart';
 
 void main() {
@@ -15,10 +16,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      home: PokemonDetails(),
+      home:  HomeScreen(),
     );
   }
 }

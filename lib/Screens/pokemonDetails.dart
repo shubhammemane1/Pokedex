@@ -3,6 +3,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pokedex/Model/models.dart';
 import 'package:pokedex/Utils/utils.dart';
 import 'package:pokedex/widgets/widgets.dart';
@@ -39,8 +40,8 @@ Pokemon pokemonData = Pokemon(
     baseExp: "64");
 
 class PokemonDetails extends StatefulWidget {
-  Pokemon? pokemon = pokemonData;
-  // const PokemonDetails({super.key, this.pokemon});
+  final Pokemon? pokemon;
+  const PokemonDetails({super.key, this.pokemon});
 
   @override
   State<PokemonDetails> createState() => _PokemonDetailsState();
@@ -54,7 +55,7 @@ class _PokemonDetailsState extends State<PokemonDetails>
   void initState() {
     // TODO: implement initState
     _tabController = TabController(
-      initialIndex: 1,
+      initialIndex: 0,
       length: 4,
       vsync: this,
     );
@@ -74,21 +75,24 @@ class _PokemonDetailsState extends State<PokemonDetails>
         elevation: 0,
         backgroundColor: AppColors.transperent,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
           icon: Icon(
             Icons.arrow_back_ios_new_rounded,
-            color: AppColors.black,
+            color: Get.isDarkMode ? AppColors.grey100 : AppColors.black,
           ),
         ),
         centerTitle: true,
         title: Text(
           widget.pokemon!.id!,
           style: TextStyle(
-            color: AppColors.black,
+            color:  Get.isDarkMode ? AppColors.grey100 : AppColors.black,
+            
           ),
         ),
         actions: [
-          Icon(Icons.favorite_border_outlined, color: AppColors.black),
+          Icon(Icons.favorite_border_outlined, color:  Get.isDarkMode ? AppColors.grey100 : AppColors.black,),
         ],
       ),
       body: SingleChildScrollView(
@@ -96,23 +100,26 @@ class _PokemonDetailsState extends State<PokemonDetails>
           children: [
             Stack(
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(
-                        widget.pokemon!.imageurl!,
-                        scale: 1.5,
-                      ),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  child: Center(
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 70, sigmaY: 70),
-                      child: Image(
+                Hero(
+                  tag: widget.pokemon!.id.toString(),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
                         image: NetworkImage(
                           widget.pokemon!.imageurl!,
                           scale: 1.5,
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: Center(
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 70, sigmaY: 70),
+                        child: Image(
+                          image: NetworkImage(
+                            widget.pokemon!.imageurl!,
+                            scale: 1.5,
+                          ),
                         ),
                       ),
                     ),
@@ -153,8 +160,9 @@ class _PokemonDetailsState extends State<PokemonDetails>
                 children: [
                   TabBar(
                     controller: _tabController,
-                    labelColor: AppColors.white,
-                    indicatorColor: AppColors.primaryColor,
+                    labelColor: Get.isDarkMode ? AppColors.grey600 : AppColors.black,
+                    indicatorColor: getTypeColor(widget.pokemon!.typeofpokemon![0]),
+                    isScrollable: true,
                     tabs: const [
                       Tab(
                         text: "About",
@@ -277,7 +285,8 @@ class _PokemonDetailsState extends State<PokemonDetails>
                           )),
                       Container(),
                       Container(
-                          child: GridView.builder(
+                          child: 
+                          GridView.builder(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           childAspectRatio: 5 / 3,
@@ -285,37 +294,17 @@ class _PokemonDetailsState extends State<PokemonDetails>
                         ),
                         itemCount: widget.pokemon!.evolutions!.length,
                         itemBuilder: (context, index) {
-                          return Stack(
-                            children: [
-                              Container(
-                                height: ScreenSize.screenHeight(context) * 0.1,
-                                width: ScreenSize.screenWidth(context),
-                                child: Card(
-                                  elevation: Sizes.HEIGHT_10,
-                                  shadowColor: getTypeColor(widget.pokemon!.typeofpokemon![0]).withOpacity(0.1),
-                                  child: Text(
-                                      widget.pokemon!.evolutions![index],
-                                      style: headingBold),
-                                ),
-                              ),
-                              Container(
-                                  alignment: Alignment.topRight,
-                                  child: Image(
-                                    image: NetworkImage(
-                                      widget.pokemon!.imageurl!,
-                                    ),
-                                  )),
-                            ],
-                          );
+                          return PokemonDetailsCard(
+                              pokemonId: widget.pokemon!.evolutions![index]);
                         },
                       )
 
                           // ListView.builder(
                           //   itemCount: widget.pokemon!.evolutions!.length,
                           //   itemBuilder: (context, index) {
-                          // return Card(
-                          //   child: Text(widget.pokemon!.evolutions![index]),
-                          // );
+                          // return PokemonDetailsCard(
+                          //     pokemonId: widget.pokemon!.evolutions![index]);
+                        
                           //   },
                           // ),
                           ),
@@ -344,7 +333,7 @@ Widget getProgressData(
           child: Text(
             statsName,
             style: subHeadingMedium!.copyWith(
-              color: AppColors.white,
+              color: Get.isDarkMode ? AppColors.grey600 : AppColors.black,
             ),
           ),
         ),

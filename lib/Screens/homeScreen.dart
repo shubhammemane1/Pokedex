@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pokedex/Model/category.dart';
 import 'package:pokedex/Model/models.dart';
 import 'package:pokedex/Utils/utils.dart';
@@ -37,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Text(
                 AppConstants.APP_NAME,
                 style: TextStyle(
-                  color: AppColors.black,
+                  color: Get.isDarkMode ? AppColors.grey100 : AppColors.black,
                 ),
               ),
             ],

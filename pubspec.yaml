@@ -33,6 +33,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_svg: ^2.0.7
+  get: ^4.6.5
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -52,6 +53,7 @@ flutter:
   assets:
     - assets/json/
     - assets/images/
+    - assets/icons/
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

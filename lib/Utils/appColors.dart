@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:pokedex/Utils/util.dart';
 
 //Const Colors to use in entire Application
 class AppColors {
@@ -42,4 +44,9 @@ class AppColors {
   static Color normal = const Color(0xFFC7C7C7); 
   static Color bug = const Color(0xEF00FF55); 
   static Color dragon = const Color(0xEEFFBB00); 
+  
+  static Color titleColor = Get.isDarkMode ? AppColors.white : AppColors.grey600; 
+  static Color iconColor = Get.isDarkMode ? AppColors.white : AppColors.grey700; 
+  static Color textColor = Get.isDarkMode ? AppColors.white : AppColors.black; 
+
 }
