@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pokedex/Model/models.dart';
 import 'package:pokedex/Screens/pokemonListingScreen.dart';
+import 'package:pokedex/Screens/screens.dart';
 import 'package:pokedex/Utils/utils.dart';
 
 class CategoryCard extends StatelessWidget {
@@ -12,7 +13,7 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => PokemonListingScreen());
+        Get.to(() => PokemonCategoryScreen());
       },
       child: Hero(
         tag: category!.heroTag!,
@@ -22,19 +23,20 @@ class CategoryCard extends StatelessWidget {
             ListView(
               children: [
                 SpaceH30(),
-                Container(
+                SizedBox(
                   width: ScreenSize.screenWidth(context),
                   height: ScreenSize.screenWidth(context) * 0.2,
                   child: Card(
-                    color: category!.categoryColor,
-                 
+                    color: category!.categoryColor!.withOpacity(0.8),
+                    shadowColor: category!.categoryColor!.withOpacity(0.5),
                     elevation: 10,
                     child: Container(
                       alignment: Alignment.centerLeft,
                       padding: const EdgeInsets.symmetric(
                           horizontal: Sizes.ELEVATION_12),
                       decoration: BoxDecoration(
-                        color: AppColors.transperent,
+                    // color: category!.categoryColor!.withOpacity(0.1),
+                        // color: AppColors.transperent,
                         gradient: LinearGradient(
                           colors: [
                             AppColors.white.withOpacity(0.1),

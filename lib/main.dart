@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pokedex/Screens/screens.dart';
+import 'package:pokedex/database/localDatabase.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await LocalDataBaseHelper.connect();
   runApp(const MyApp());
 }
 
@@ -19,7 +23,7 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      home:  HomeScreen(),
+      home: HomeScreen(),
     );
   }
 }

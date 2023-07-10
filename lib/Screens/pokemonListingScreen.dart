@@ -19,7 +19,7 @@ class PokemonListingScreen extends StatelessWidget {
           onPressed: () {
             Get.back();
           },
-          icon:  Icon(
+          icon: Icon(
             Icons.arrow_back_ios_new_rounded,
             color: Get.isDarkMode ? AppColors.grey100 : AppColors.black,
           ),
@@ -55,7 +55,9 @@ class PokemonListingScreen extends StatelessWidget {
                               crossAxisCount: 2, childAspectRatio: 6 / 4),
                       itemCount: listOfPokemon.length,
                       itemBuilder: (context, index) {
-                        return PokemonListCard(pokemon: listOfPokemon[index]);
+                        return PokemonListCard(
+                          pokemon: listOfPokemon[index],
+                        );
                       },
                     );
                   }

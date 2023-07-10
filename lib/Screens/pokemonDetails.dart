@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pokedex/Model/models.dart';
 import 'package:pokedex/Utils/utils.dart';
+import 'package:pokedex/database/localDatabase.dart';
 import 'package:pokedex/widgets/widgets.dart';
 
 Pokemon pokemonData = Pokemon(
@@ -41,7 +42,9 @@ Pokemon pokemonData = Pokemon(
 
 class PokemonDetails extends StatefulWidget {
   final Pokemon? pokemon;
-  const PokemonDetails({super.key, this.pokemon});
+
+  final Function(FavouritePokemon)? deleteCallback;
+  const PokemonDetails({super.key, this.pokemon, this.deleteCallback});
 
   @override
   State<PokemonDetails> createState() => _PokemonDetailsState();
@@ -51,6 +54,9 @@ class _PokemonDetailsState extends State<PokemonDetails>
     with TickerProviderStateMixin {
   late TabController _tabController;
 
+  List<FavouritePokemon> listOfFavourite = [];
+  bool isFavourite = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -59,13 +65,36 @@ class _PokemonDetailsState extends State<PokemonDetails>
       length: 4,
       vsync: this,
     );
+    checkIsFavourite();
     super.initState();
+  }
+
+  checkIsFavourite() async {
+    listOfFavourite = await LocalDataBaseHelper().fetchPokemon();
+
+    for (var element in listOfFavourite) {
+      if (element.pokemonId == widget.pokemon!.id!) {
+        setState(() {
+          isFavourite = true;
+        });
+      }
+    }
   }
 
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  void performDeletion(FavouritePokemon data) {
+    // Perform deletion action
+
+    // Invoke the delete callback function to update the list on the first page
+    widget.deleteCallback!(data);
+
+    // Navigate back to the first page
+    Navigator.pop(context);
   }
 
   @override
@@ -87,12 +116,33 @@ class _PokemonDetailsState extends State<PokemonDetails>
         title: Text(
           widget.pokemon!.id!,
           style: TextStyle(
-            color:  Get.isDarkMode ? AppColors.grey100 : AppColors.black,
-            
+            color: Get.isDarkMode ? AppColors.grey100 : AppColors.black,
           ),
         ),
         actions: [
-          Icon(Icons.favorite_border_outlined, color:  Get.isDarkMode ? AppColors.grey100 : AppColors.black,),
+          IconButton(
+            onPressed: () {
+              isFavourite
+                  ? LocalDataBaseHelper().deletePokemon(
+                      FavouritePokemon(pokemonId: widget.pokemon!.id))
+                  : LocalDataBaseHelper().insertUser(
+                      pokemonID:
+                          FavouritePokemon(pokemonId: widget.pokemon!.id!));
+              setState(() {
+                isFavourite = !isFavourite;
+              });
+            },
+            icon: Icon(
+              isFavourite ? Icons.favorite : Icons.favorite_border_outlined,
+              color: Get.isDarkMode
+                  ? isFavourite
+                      ? AppColors.categoryRed
+                      : AppColors.grey100
+                  : isFavourite
+                      ? AppColors.categoryRed
+                      : AppColors.black,
+            ),
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -103,6 +153,7 @@ class _PokemonDetailsState extends State<PokemonDetails>
                 Hero(
                   tag: widget.pokemon!.id.toString(),
                   child: Container(
+                    width: ScreenSize.screenWidth(context) * 0.78,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: NetworkImage(
@@ -115,11 +166,8 @@ class _PokemonDetailsState extends State<PokemonDetails>
                     child: Center(
                       child: BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 70, sigmaY: 70),
-                        child: Image(
-                          image: NetworkImage(
-                            widget.pokemon!.imageurl!,
-                            scale: 1.5,
-                          ),
+                        child: CacheImage(
+                          imageUrl: widget.pokemon!.imageurl!,
                         ),
                       ),
                     ),
@@ -160,8 +208,10 @@ class _PokemonDetailsState extends State<PokemonDetails>
                 children: [
                   TabBar(
                     controller: _tabController,
-                    labelColor: Get.isDarkMode ? AppColors.grey600 : AppColors.black,
-                    indicatorColor: getTypeColor(widget.pokemon!.typeofpokemon![0]),
+                    labelColor:
+                        Get.isDarkMode ? AppColors.grey600 : AppColors.black,
+                    indicatorColor:
+                        getTypeColor(widget.pokemon!.typeofpokemon![0]),
                     isScrollable: true,
                     tabs: const [
                       Tab(
@@ -285,8 +335,7 @@ class _PokemonDetailsState extends State<PokemonDetails>
                           )),
                       Container(),
                       Container(
-                          child: 
-                          GridView.builder(
+                          child: GridView.builder(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           childAspectRatio: 5 / 3,
@@ -295,7 +344,9 @@ class _PokemonDetailsState extends State<PokemonDetails>
                         itemCount: widget.pokemon!.evolutions!.length,
                         itemBuilder: (context, index) {
                           return PokemonDetailsCard(
-                              pokemonId: widget.pokemon!.evolutions![index]);
+                            pokemonId: widget.pokemon!.evolutions![index],
+                            deleteCallback: widget.deleteCallback!,
+                          );
                         },
                       )
 
@@ -304,7 +355,7 @@ class _PokemonDetailsState extends State<PokemonDetails>
                           //   itemBuilder: (context, index) {
                           // return PokemonDetailsCard(
                           //     pokemonId: widget.pokemon!.evolutions![index]);
-                        
+
                           //   },
                           // ),
                           ),

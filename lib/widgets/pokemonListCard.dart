@@ -1,22 +1,28 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pokedex/Model/models.dart';
 import 'package:pokedex/Screens/pokemonDetails.dart';
 import 'package:pokedex/Utils/utils.dart';
+import 'package:pokedex/database/localDatabase.dart';
+import 'package:pokedex/widgets/cachedNetworkImage.dart';
 
 class PokemonListCard extends StatelessWidget {
   final Pokemon pokemon;
-  const PokemonListCard({super.key, required this.pokemon});
+  final Function(FavouritePokemon)? deleteCallback;
+  const PokemonListCard({super.key, required this.pokemon,  this.deleteCallback});
+
+  
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         // Get.to(() => PokemonDetails(pokemon: pokemon));
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => PokemonDetails(pokemon: pokemon),
+            builder: (context) => PokemonDetails(pokemon: pokemon, deleteCallback: deleteCallback,),
           ),
         );
       },
@@ -46,13 +52,17 @@ class PokemonListCard extends StatelessWidget {
               ),
             ),
             Container(
-                alignment: Alignment.topRight,
-                child: Image(
-                  image: NetworkImage(
-                    pokemon.imageurl!,
-                  ),
-                  height: ScreenSize.screenHeight(context) * 0.15,
-                )),
+              alignment: Alignment.topRight,
+              height: ScreenSize.screenHeight(context) * 0.15,
+              child: CacheImage(
+                imageUrl: pokemon.imageurl!,
+              ),
+              //  Image(
+              //   image: NetworkImage(
+              //     pokemon.imageurl!,
+              //   ),
+              // ),
+            ),
           ],
         ),
       ),

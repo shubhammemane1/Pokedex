@@ -3,10 +3,15 @@ import 'package:get/get.dart';
 import 'package:pokedex/Model/models.dart';
 import 'package:pokedex/Screens/screens.dart';
 import 'package:pokedex/Utils/utils.dart';
+import 'package:pokedex/widgets/widgets.dart';
+
+import '../database/localDatabase.dart';
 
 class PokemonDetailsCard extends StatefulWidget {
   final String? pokemonId;
-  const PokemonDetailsCard({super.key, this.pokemonId});
+  final Function(FavouritePokemon) deleteCallback;
+  const PokemonDetailsCard(
+      {super.key, this.pokemonId, required this.deleteCallback});
 
   @override
   State<PokemonDetailsCard> createState() => _PokemonDetailsCardState();
@@ -43,14 +48,15 @@ class _PokemonDetailsCardState extends State<PokemonDetailsCard> {
         if (snapshot.hasData) {
           return GestureDetector(
             onTap: () {
-              Get.to(() => PokemonDetails(pokemon: pokemon));
+              // Get.to(() => PokemonDetails(pokemon: pokemon));
 
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => PokemonDetails(pokemon: pokemon),
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PokemonDetails(
+                      pokemon: pokemon, deleteCallback: widget.deleteCallback),
+                ),
+              );
             },
             child: Stack(
               alignment: Alignment.centerLeft,
@@ -68,12 +74,11 @@ class _PokemonDetailsCardState extends State<PokemonDetailsCard> {
                   ),
                 ),
                 Container(
-                    alignment: Alignment.topRight,
-                    child: Image(
-                      image: NetworkImage(
-                        pokemon!.imageurl!,
-                      ),
-                    )),
+                  alignment: Alignment.topRight,
+                  child: CacheImage(
+                    imageUrl: pokemon!.imageurl!,
+                  ),
+                ),
               ],
             ),
             // ),
