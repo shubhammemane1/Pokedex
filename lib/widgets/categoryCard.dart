@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pokedex/Model/models.dart';
-import 'package:pokedex/Screens/pokemonListingScreen.dart';
-import 'package:pokedex/Screens/screens.dart';
 import 'package:pokedex/Utils/utils.dart';
 
 class CategoryCard extends StatelessWidget {
@@ -13,7 +11,7 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => PokemonCategoryScreen());
+        Get.to(() => category!.nextScreen!);
       },
       child: Hero(
         tag: category!.heroTag!,
@@ -21,6 +19,7 @@ class CategoryCard extends StatelessWidget {
           fit: StackFit.expand,
           children: [
             ListView(
+              shrinkWrap: true,
               children: [
                 SpaceH30(),
                 SizedBox(
@@ -35,7 +34,7 @@ class CategoryCard extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: Sizes.ELEVATION_12),
                       decoration: BoxDecoration(
-                    // color: category!.categoryColor!.withOpacity(0.1),
+                        // color: category!.categoryColor!.withOpacity(0.1),
                         // color: AppColors.transperent,
                         gradient: LinearGradient(
                           colors: [
@@ -51,7 +50,7 @@ class CategoryCard extends StatelessWidget {
                         child: Text(
                           category!.categoryName!,
                           style: TextStyle(
-                            color: AppColors.white,
+                            // color: AppColors.white,
                             fontSize: Sizes.TEXT_SIZE_16,
                           ),
                         ),
@@ -67,7 +66,7 @@ class CategoryCard extends StatelessWidget {
                   image: AssetImage(
                     category!.categoryIcon!,
                   ),
-                  height: Sizes.HEIGHT_70,
+                  height: Sizes.HEIGHT_60,
                 )),
           ],
         ),

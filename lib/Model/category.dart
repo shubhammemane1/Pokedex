@@ -27,13 +27,6 @@ List<Category> listOfCategory = [
     heroTag: AppConstants.APP_NAME,
   ),
   Category(
-    categoryName: "Moves",
-    categoryColor: getTypeColor("fighting"),
-    nextScreen: PokemonListingScreen(),
-    categoryIcon: AssetsPath.fighting,
-    heroTag: "moves",
-  ),
-  Category(
     categoryName: "Category",
     categoryColor: getTypeColor("fire"),
     nextScreen: const PokemonCategoryScreen(),

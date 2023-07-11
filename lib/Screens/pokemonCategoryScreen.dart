@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pokedex/Model/models.dart';
 import 'package:pokedex/Utils/utils.dart';
 import 'package:pokedex/widgets/widgets.dart';
@@ -97,15 +98,44 @@ class PokemonCategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GridView.builder(
-        itemCount: listOfCategory.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, childAspectRatio: 6/5),
-        itemBuilder: (context, index) {
-          return CategoryCard(
-            category: listOfCategory[index],
-          );
-        },
+      appBar: AppBar(
+        centerTitle: true,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: Get.isDarkMode ? AppColors.grey100 : AppColors.black,
+          ),
+        ),
+        title: Text(
+          "${AppConstants.pokemon} Category",
+          style: TextStyle(
+            color: Get.isDarkMode ? AppColors.grey100 : AppColors.black,
+          ),
+        ),
+        elevation: 0,
+        backgroundColor: AppColors.transperent,
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: Sizes.WIDTH_8),
+          height: ScreenSize.screenHeight(context) * 0.98,
+          child: GridView.builder(
+            itemCount: listOfCategory.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              // childAspectRatio: 5 / 3,
+              mainAxisSpacing: 5,
+            ),
+            itemBuilder: (context, index) {
+              return CategoryCard(
+                category: listOfCategory[index],
+              );
+            },
+          ),
+        ),
       ),
     );
   }
