@@ -215,4 +215,12 @@ class Pokemon {
     data['base_exp'] = baseExp;
     return data;
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'id': id,
+      // map other properties accordingly
+    };
+  }
 }

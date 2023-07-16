@@ -18,7 +18,7 @@ TextStyle? subTitleRegular = const TextStyle(
 );
 
 TextStyle? headingBold = const TextStyle(
-  color: AppColors.grey550,
+  // color: AppColors.grey550,
   fontSize: Sizes.TEXT_SIZE_16,
   fontWeight: FontWeight.bold,
 );
